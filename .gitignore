@@ -1,3 +1,12 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+/bin
+package-lock.json
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -31,3 +40,16 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Target folder
+!.mvn/wrapper/maven-wrapper.jar
+.openapi-generator
+.log
+*.log
+*.temp*
+
+### Modelo del API ###
+src/main/java/com/zenith/bitbite/api/**
+
+### Ficheros de Wiremock para modo DEMO ###
+src/main/resources/wiremock/
