@@ -1,0 +1,49 @@
+openapi: 3.0.0
+
+info: # Se agregó la información básica del API
+  title: E-commerce API
+  version: 1.0.0
+  description: API para gestión de carrito de compras
+
+tags:
+  - name: "Customers"
+    description: "Customer management"
+
+paths:
+  /users:
+    post:
+      operationId: apiTest
+      summary: "Texto de prueba"
+      description: "Descripción corregida"
+
+      tags:
+        - "Customers"
+
+      requestBody:
+        description: "Descripción requerida"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserId"
+
+      responses: # Se agregó la sección de respuestas
+        '200':
+          description: "Solicitud exitosa"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserId"
+
+
+components:
+  schemas:
+    UserId:
+      description: "ID de usuario"
+      type: object
+      properties: # Se corrigió la definición de properties
+        userId:
+          type: integer
+          format: int64
+          description: "ID del usuario"
+          example: 234423

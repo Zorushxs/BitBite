@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.4.2</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.zenith</groupId>
+	<artifactId>bitbite</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>BitBite</name>
+	<description>Starting project for url shortener</description>
+
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+
+	<dependencies>
+		<!-- Spring Boot Starters -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.8.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Swagger Dependencies -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+
+		<!-- Jakarta Dependencies -->
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>5.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.1</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- Clean the API package before generating with OpenAPI Generator -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase> <!-- You can choose the lifecycle phase you prefer -->
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<!-- Delete the 'api' folder and all its contents -->
+							<target>
+								<delete dir="${project.basedir}/src/main/java/com/zenith/bitbite/api" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- OpenAPI Generator Maven Plugin -->
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>6.0.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/contract/swagger-contract.yaml</inputSpec>
+							<generatorName>spring</generatorName>
+							<output>${project.basedir}</output>
+							<library>spring-boot</library>
+							<apiPackage>com.zenith.bitbite.api</apiPackage>
+							<modelPackage>com.zenith.bitbite.api.domain</modelPackage>
+							<generateSupportingFiles>false</generateSupportingFiles>
+							<configOptions>
+								<interfaceOnly>true</interfaceOnly>
+								<useTags>true</useTags>
+								<skipDefaultInterface>true</skipDefaultInterface> <!-- 🔹 Evita métodos default -->
+								<serializableModel>true</serializableModel>
+<!--							It doesn't use
+								<skipOverWrite>false</skipOverWrite>
+								<useSpringBoot3>true</useSpringBoot3> &lt;!&ndash; Asegura compatibilidad con Spring Boot 3 &ndash;&gt;
+								<performBeanValidation>true</performBeanValidation> &lt;!&ndash; Agrega validaciones con @Valid &ndash;&gt;
+								<useOptional>false</useOptional>  &lt;!&ndash; 🔹 Esto evita el uso de Optional y ApiUtil &ndash;&gt;
+								<delegatePattern>false</delegatePattern> &lt;!&ndash; No genere implementación por defecto en los métodos &ndash;&gt;
+								<useResponseEntity>true</useResponseEntity> &lt;!&ndash; Usa ResponseEntity<T> en los métodos &ndash;&gt;
+								<java8>true</java8>  &lt;!&ndash; 🔹 Usa características modernas de Java &ndash;&gt;
+								<compactModel>true</compactModel>  &lt;!&ndash; 🔹 Reduce saltos de línea en los modelos &ndash;&gt;
+								<prettify>true</prettify>  &lt;!&ndash; Intenta mejorar el formato generado &ndash;&gt;
+								<legacyDiscriminatorBehavior>false</legacyDiscriminatorBehavior>
+								<sortParamsByRequiredFlag>true</sortParamsByRequiredFlag> &lt;!&ndash; 🔹 Ordena parámetros de forma predecible &ndash;&gt;-->
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
