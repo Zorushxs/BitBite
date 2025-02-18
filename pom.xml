@@ -113,7 +113,7 @@
 						<configuration>
 							<!-- Delete the 'api' folder and all its contents -->
 							<target>
-								<delete dir="${project.basedir}/src/main/java/com/zenith/bitbite/api" />
+								<delete dir="${project.basedir}/src/main/java/com/zenith/bitbite/service/api" />
 							</target>
 						</configuration>
 					</execution>
@@ -135,8 +135,8 @@
 							<generatorName>spring</generatorName>
 							<output>${project.basedir}</output>
 							<library>spring-boot</library>
-							<apiPackage>com.zenith.bitbite.api</apiPackage>
-							<modelPackage>com.zenith.bitbite.api.domain</modelPackage>
+							<apiPackage>com.zenith.bitbite.service.api</apiPackage>
+							<modelPackage>com.zenith.bitbite.service.api.domain</modelPackage>
 							<generateSupportingFiles>false</generateSupportingFiles>
 							<configOptions>
 								<interfaceOnly>true</interfaceOnly>

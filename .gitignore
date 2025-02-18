@@ -49,7 +49,7 @@ build/
 *.temp*
 
 ### Modelo del API ###
-src/main/java/com/zenith/bitbite/api/**
+src/main/java/com/zenith/bitbite/service/api/**
 
 ### Ficheros de Wiremock para modo DEMO ###
 src/main/resources/wiremock/

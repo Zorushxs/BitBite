@@ -1,4 +1,4 @@
-package com.zenith.bitbite;
+package com.zenith.bitbite.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
